@@ -1,0 +1,15 @@
+<section class="panel">
+  <h2>Inspect a document</h2>
+  <p>Upload Excel (.xlsx), Word (.docx), or PDF. Download a detailed JSON report with locations, policy matches and extraction limitations. Maximum 20 MB.</p>
+  {% if user.is_staff %}
+  <form method="post" enctype="multipart/form-data" action="{% url 'inspect_document' %}">
+    {% csrf_token %}
+    <label for="document">Document</label>
+    <input id="document" name="document" type="file" accept=".xlsx,.docx,.pdf" required>
+    <button type="submit">Scan and download report</button>
+  </form>
+  {% else %}
+  <p><a href="{% url 'admin:login' %}?next=/">Sign in as staff</a> to inspect documents.</p>
+  {% endif %}
+  <p>Image-based content requires OCR review. Instructions inside documents are inspected as untrusted text. No file is forwarded.</p>
+</section>
